@@ -2,12 +2,13 @@
 
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Target, Eye, Gem, MapPin, Shield, Mail, Factory, Droplet } from 'lucide-react';
+import { Target, Eye, Gem, MapPin, Shield, Mail, Factory, Droplet, Phone } from 'lucide-react';
 import ScrollImageSequence from '../components/ScrollImageSequence';
 import Header from '../components/Header';
 import LightRays from '../components/LightRays';
 import TiltedCard from '../components/TiltedCard';
 import Particles from '../components/Particles';
+import Link from 'next/link';
 
 export default function BluoraLandingVideo() {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -332,16 +333,16 @@ export default function BluoraLandingVideo() {
             </div>
 
             {/* ABOUT SECTION - MATCHING BACKGROUND + PARTICLES */}
-            <section className="relative min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-black text-white py-12 overflow-hidden">
+            <section className="relative min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-black text-white pt-8 overflow-hidden">
 
                 {/* Particles Background */}
                 <div className="absolute inset-0 z-0 opacity-60">
                     <Particles
                         particleColors={['#06b6d4', '#3b82f6']}
-                        particleCount={420}
-                        particleSpread={12}
-                        speed={0.42}
-                        particleBaseSize={70}
+                        particleCount={220}
+                        particleSpread={8}
+                        speed={0.12}
+                        particleBaseSize={90}
                         moveParticlesOnHover={true}
                         alphaParticles={true}
                         disableRotation={false}
@@ -352,7 +353,7 @@ export default function BluoraLandingVideo() {
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1200px] h-[600px] bg-gradient-radial from-cyan-400/20 via-blue-500/10 to-transparent rounded-full blur-3xl pointer-events-none"></div>
 
                 {/* Content */}
-                <div className="relative z-10 max-w-7xl mx-auto px-2 lg:px-8">
+                <div className="relative z-10 max-w-7xl mx-auto px-8 lg:px-8">
 
                     {/* Section Title */}
                     <motion.div
@@ -360,7 +361,7 @@ export default function BluoraLandingVideo() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.8 }}
-                        className="text-center mb-16"
+                        className="text-center mb-10"
                     >
                         <h2 className="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 mb-4">
                             About Bluora
@@ -371,7 +372,7 @@ export default function BluoraLandingVideo() {
                     </motion.div>
 
                     {/* Info Grid */}
-                    <div className="grid md:grid-cols-2 gap-8 mb-16">
+                    <div className="grid md:grid-cols-2 gap-4 mb-8">
 
                         {/* Manufacturer Info */}
                         <motion.div
@@ -432,7 +433,7 @@ export default function BluoraLandingVideo() {
 
                     </div>
 
-                    {/* Contact Info */}
+                    {/* Contact Info with Button */}
                     <motion.div
                         initial={{ opacity: 0, y: 50 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -443,22 +444,31 @@ export default function BluoraLandingVideo() {
                         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
                             <div className="flex items-center gap-4">
                                 <div className="p-4 bg-purple-500/20 rounded-xl">
-                                    <Mail size={32} className="text-purple-400" />
+                                    <Phone size={32} className="text-purple-400" />
                                 </div>
                                 <div>
                                     <p className="text-sm text-purple-300 mb-1">For Enquiries</p>
                                     <a href="mailto:Info@hddrinksbeverages.com" className="text-xl font-semibold text-white hover:text-purple-300 transition-colors">
                                         Info@hddrinksbeverages.com
                                     </a>
+                                    <p className="text-purple-100/70 text-sm mt-1">+91 6239 190187</p>
                                 </div>
                             </div>
-                            <div className="text-center md:text-right">
-                                <p className="text-sm text-purple-300 mb-2">Storage Instructions</p>
-                                <p className="text-white/90 text-sm max-w-md">
-                                    Best before 6 months from date of packing. Store in a cool & dry place.
-                                    Do not buy if cap/seal is broken. Keep away from direct sunlight.
-                                </p>
-                            </div>
+                            <Link href="/contact">
+                                <motion.button
+                                    className="px-8 py-4 bg-gradient-to-r from-cyan-600 via-blue-600 to-purple-600 text-white rounded-xl font-semibold shadow-xl hover:shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 flex items-center gap-3 group"
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                >
+                                    <Mail size={20} />
+                                    <span>Contact Us</span>
+                                    <motion.span
+                                        className="group-hover:translate-x-1 transition-transform"
+                                    >
+                                        →
+                                    </motion.span>
+                                </motion.button>
+                            </Link>
                         </div>
                     </motion.div>
 
