@@ -11,6 +11,7 @@ import Particles from '../components/Particles';
 import Link from 'next/link';
 
 export default function BluoraLandingVideo() {
+    const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
     const containerRef = useRef<HTMLDivElement>(null);
 
     const { scrollYProgress } = useScroll({
@@ -85,7 +86,7 @@ export default function BluoraLandingVideo() {
                         <div className="absolute z-30 flex items-center justify-center">
                             <ScrollImageSequence
                                 totalFrames={70}
-                                folderPath="/bg/"
+                                folderPath={`${basePath}/bg/`}
                                 filePrefix="ezgif-frame-"
                                 fileExtension="png"
                                 videoX={videoX}
@@ -109,28 +110,28 @@ export default function BluoraLandingVideo() {
                         {/* Floating Water Bubbles */}
                         <motion.div style={{ opacity: textOpacity }}>
                             <motion.img
-                                src="/bubble3.webp"
+                                src={`${basePath}/bubble3.webp`}
                                 alt="Water Bubble"
                                 className="absolute top-[10%] left-[10%] w-24 md:w-40 opacity-60"
                                 animate={{ y: [0, -20, 0], rotate: [0, 5, 0] }}
                                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                             />
                             <motion.img
-                                src="/bubble4.png"
+                                src={`${basePath}/bubble4.png`}
                                 alt="Water Bubble"
                                 className="absolute top-[15%] right-[8%] w-20 md:w-32 opacity-50"
                                 animate={{ y: [0, 15, 0], rotate: [0, -5, 0] }}
                                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
                             />
                             <motion.img
-                                src="/bubble3.webp"
+                                src={`${basePath}/bubble3.webp`}
                                 alt="Water Bubble"
                                 className="absolute bottom-[20%] z-0 left-[15%] w-16 md:w-28 opacity-40"
                                 animate={{ y: [0, -10, 0], x: [0, 10, 0] }}
                                 transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 2 }}
                             />
                             <motion.img
-                                src="/bubble4.png"
+                                src={`${basePath}/bubble4.png`}
                                 alt="Water Bubble"
                                 className="absolute bottom-[25%] right-[12%] w-20 md:w-36 opacity-30"
                                 animate={{ y: [0, 20, 0], rotate: [0, 10, 0] }}
@@ -149,24 +150,24 @@ export default function BluoraLandingVideo() {
                     >
                         <defs>
                             <filter id="glow-cyan" x="-50%" y="-50%" width="200%" height="200%">
-                                <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+                                <feGaussianBlur stdDeviation="6" result="coloredBlur" />
                                 <feMerge>
-                                    <feMergeNode in="coloredBlur"/>
-                                    <feMergeNode in="SourceGraphic"/>
+                                    <feMergeNode in="coloredBlur" />
+                                    <feMergeNode in="SourceGraphic" />
                                 </feMerge>
                             </filter>
                             <filter id="glow-blue" x="-50%" y="-50%" width="200%" height="200%">
-                                <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+                                <feGaussianBlur stdDeviation="6" result="coloredBlur" />
                                 <feMerge>
-                                    <feMergeNode in="coloredBlur"/>
-                                    <feMergeNode in="SourceGraphic"/>
+                                    <feMergeNode in="coloredBlur" />
+                                    <feMergeNode in="SourceGraphic" />
                                 </feMerge>
                             </filter>
                             <filter id="glow-purple" x="-50%" y="-50%" width="200%" height="200%">
-                                <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+                                <feGaussianBlur stdDeviation="6" result="coloredBlur" />
                                 <feMerge>
-                                    <feMergeNode in="coloredBlur"/>
-                                    <feMergeNode in="SourceGraphic"/>
+                                    <feMergeNode in="coloredBlur" />
+                                    <feMergeNode in="SourceGraphic" />
                                 </feMerge>
                             </filter>
                         </defs>
@@ -231,7 +232,7 @@ export default function BluoraLandingVideo() {
                         {/* Mission Card */}
                         <div className="rounded-2xl shadow-2xl pb-2">
                             <TiltedCard
-                                imageSrc="/mission.webp"
+                                imageSrc={`${basePath}/mission.webp`}
                                 altText="Mission"
                                 captionText=""
                                 containerHeight="180px"
@@ -262,7 +263,7 @@ export default function BluoraLandingVideo() {
                         {/* Vision Card */}
                         <div className="rounded-2xl pb-2 shadow-2xl">
                             <TiltedCard
-                                imageSrc="/vision.jpg"
+                                imageSrc={`${basePath}/vision.jpg`}
                                 altText="Vision"
                                 captionText=""
                                 containerHeight="180px"
@@ -293,7 +294,7 @@ export default function BluoraLandingVideo() {
                         {/* Values Card */}
                         <div className="rounded-2xl pb-2 shadow-2xl">
                             <TiltedCard
-                                imageSrc="/va.webp"
+                                imageSrc={`${basePath}/va.webp`}
                                 altText="Values"
                                 captionText=""
                                 containerHeight="180px"
