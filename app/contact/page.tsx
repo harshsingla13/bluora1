@@ -118,19 +118,19 @@ const ContactPage = () => {
 
             {/* Liquid Glass Header */}
             <div className="relative z-10 pt-6">
-                <div className=" justify-items-center container mx-auto px-6">
+                <div className="flex justify-center container mx-auto px-4 md:px-6">
                     {/* Liquid Glass Effect with Tailwind */}
-                    <div className=" rounded-full border border-cyan-400/30 shadow-2xl/20 backdrop-blur-sm bg-white/10 w-2xl">
+                    <div className="rounded-2xl md:rounded-full border border-cyan-400/30 shadow-2xl/20 backdrop-blur-sm bg-white/10 w-full max-w-2xl">
                         <motion.div
-                            className="text-center py-8 px-6"
+                            className="text-center py-6 md:py-8 px-4 md:px-6"
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6 }}
                         >
-                            <h1 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 mb-3">
+                            <h1 className="text-3xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 mb-2 md:mb-3">
                                 Get In Touch
                             </h1>
-                            <p className="text-lg md:text-xl text-white/90 font-semibold">
+                            <p className="text-base md:text-xl text-white/90 font-semibold">
                                 We&apos;d love to hear from you. Reach out to us anytime!
                             </p>
                         </motion.div>
