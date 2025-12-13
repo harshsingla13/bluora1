@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState, ChangeEvent } from "react";
-import { MapPin, Phone, Mail, Clock, Send, MessageCircle } from "lucide-react";
+import Link from "next/link";
+import { MapPin, Phone, Mail, Clock, Send, MessageCircle, Droplets } from "lucide-react";
 import Particles from '../../components/Particles';
 import { motion } from 'framer-motion';
 
@@ -96,6 +97,24 @@ const ContactPage = () => {
 
             {/* Radial Glow Bottom */}
             <div className="absolute bottom-0 right-0 w-[800px] h-[500px] bg-gradient-radial from-purple-500/15 via-blue-600/10 to-transparent rounded-full blur-3xl pointer-events-none"></div>
+
+
+            {/* Bluora Logo - Top Left */}
+            <div className="relative z-10 pt-6 px-6">
+                <Link href="/" className="flex items-center gap-3 group">
+                    <div className="bg-gradient-to-br from-cyan-500 to-blue-600 p-2.5 rounded-xl group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-cyan-500/20">
+                        <Droplets size={22} className="text-white" strokeWidth={2.5} />
+                    </div>
+                    <div className="flex flex-col leading-none">
+                        <span className="text-xl font-bold text-white tracking-tight">
+                            Bluora<span className="text-cyan-400">™</span>
+                        </span>
+                        <span className="text-[9px] text-gray-400 uppercase tracking-widest mt-0.5">
+                            The Power of Pure
+                        </span>
+                    </div>
+                </Link>
+            </div>
 
             {/* Liquid Glass Header */}
             <div className="relative z-10 pt-6">
