@@ -20,9 +20,9 @@ export default function BluoraLandingVideo() {
     });
 
     // Bottle animations - NO MOVING UP
-    const videoX = useTransform(scrollYProgress, [0, 0.5], ["0%", "20%"]);
-    const videoY = useTransform(scrollYProgress, [0, 0.5], ["0%", "1%"]);
-    const videoScale = useTransform(scrollYProgress, [0, 0.6], [0.7, 0.6]);
+    const videoX = useTransform(scrollYProgress, [0, 0.5], ["-2%", "20%"]);
+    const videoY = useTransform(scrollYProgress, [0, 0.5], ["3%", "1%"]);
+    const videoScale = useTransform(scrollYProgress, [0, 0.6], [0.35, 0.3]);
     const videorotate = useTransform(scrollYProgress, [0, 0.6], [7, 0]);
 
     // Header fades
@@ -114,7 +114,7 @@ export default function BluoraLandingVideo() {
                         {/* Center: Bottle */}
                         <div className="absolute z-30 flex items-center justify-center">
                             <ScrollImageSequence
-                                totalFrames={70}
+                                totalFrames={40}
                                 folderPath={`${basePath}/bg/`}
                                 filePrefix="ezgif-frame-"
                                 fileExtension="png"
@@ -122,19 +122,21 @@ export default function BluoraLandingVideo() {
                                 videoY={videoY}
                                 videorotate={videorotate}
                                 videoScale={videoScale}
-                                className="max-w-full max-h-full drop-shadow-[0_0_120px_rgba(6,182,212,0.8)] brightness-110 contrast-110 md:block hidden"
+                                className="max-w-full max-h-full drop-shadow-[0_0_120px_rgba(6,182,212,0.8)] md:block hidden"
+                                scrollEndThreshold={0.6}
                             />
                             {/* Mobile: Static centered bottle - Crystal Layout Hero Scale */}
                             <ScrollImageSequence
-                                totalFrames={70}
+                                totalFrames={40}
                                 folderPath={`${basePath}/bg/`}
                                 filePrefix="ezgif-frame-"
                                 fileExtension="png"
-                                videoX={useTransform(scrollYProgress, [0, 1], ["0%", "0%"])}
-                                videoY={useTransform(scrollYProgress, [0, 1], ["5%", "-35%"])}
+                                videoX={useTransform(scrollYProgress, [0, 1], ["0%", "-3%"])}
+                                videoY={useTransform(scrollYProgress, [0, 1], ["3%", "-4%"])}
                                 videorotate={useTransform(scrollYProgress, [0, 1], [7, 0])}
-                                videoScale={useTransform(scrollYProgress, [0, 0.6], [1.5, 1.4])}
-                                className="max-w-full max-h-full drop-shadow-[0_0_120px_rgba(6,182,212,0.8)] brightness-110 contrast-110 md:hidden block opacity-100 z-30"
+                                videoScale={useTransform(scrollYProgress, [0, 0.6], [0.7, 0.8])}
+                                className="max-w-full max-h-full drop-shadow-[0_0_120px_rgba(6,182,212,0.8)] brightness-84 md:hidden block opacity-100 z-30"
+                                scrollEndThreshold={0.5}
                             />
                         </div>
 
@@ -297,7 +299,7 @@ export default function BluoraLandingVideo() {
                             transition={{ delay: 0.3, duration: 0.8 }}
                             className="absolute top-[6%] left-3 w-[280px] z-20 pointer-events-auto"
                         >
-                            <div className="bg-white/5 backdrop-blur-[2px] rounded-2xl p-5 border border-white/20 shadow-[0_0_40px_rgba(0,0,0,0.25)] transform -rotate-2">
+                            <div className="bg-gradient-to-br from-slate-900/90 to-cyan-950/90 backdrop-blur-sm rounded-2xl p-5 border border-cyan-500/30 shadow-[0_0_40px_rgba(0,0,0,0.4)] transform -rotate-2">
                                 <div className="flex flex-col gap-3">
                                     <div className="flex items-center gap-3">
                                         <div className="p-3 bg-cyan-500/20 rounded-full shadow-[0_0_20px_rgba(6,182,212,0.5)]">
@@ -319,7 +321,7 @@ export default function BluoraLandingVideo() {
                             transition={{ delay: 0.5, duration: 0.8 }}
                             className="absolute top-[28%] right-3 w-[280px] z-0 pointer-events-auto"
                         >
-                            <div className="bg-white/5 backdrop-blur-[2px] rounded-2xl p-5 border border-white/20 shadow-[0_0_40px_rgba(0,0,0,0.25)] transform rotate-2">
+                            <div className="bg-gradient-to-br from-slate-900/90 to-blue-950/90 backdrop-blur-sm rounded-2xl p-5 border border-blue-500/30 shadow-[0_0_40px_rgba(0,0,0,0.4)] transform rotate-2">
                                 <div className="flex flex-col gap-3">
                                     <div className="flex items-center gap-3">
                                         <div className="p-3 bg-blue-500/20 rounded-full shadow-[0_0_20px_rgba(59,130,246,0.5)]">
@@ -327,7 +329,7 @@ export default function BluoraLandingVideo() {
                                         </div>
                                         <h4 className="text-white font-black text-sm tracking-widest uppercase">VISION</h4>
                                     </div>
-                                    <p className="text-white/80 text-xs  leading-relaxed">
+                                    <p className="text-white/80 text-xs leading-relaxed">
                                         To be the most trusted name in pure water, present in every home worldwide.
                                     </p>
                                 </div>
@@ -341,7 +343,7 @@ export default function BluoraLandingVideo() {
                             transition={{ delay: 0.7, duration: 0.8 }}
                             className="absolute bottom-[27%] left-3 w-[280px]  pointer-events-auto -rotate-2"
                         >
-                            <div className="bg-white/5  backdrop-blur-[2px] rounded-2xl p-5 border border-white/20 shadow-[0_0_40px_rgba(0,0,0,0.25)] transform">
+                            <div className="bg-gradient-to-br from-slate-900/90 to-purple-950/90 backdrop-blur-sm rounded-2xl p-5 border border-purple-500/30 shadow-[0_0_40px_rgba(0,0,0,0.4)] transform">
                                 <div className="flex flex-col gap-3">
                                     <div className="flex items-center gap-3">
                                         <div className="p-3 bg-purple-500/20 rounded-full shadow-[0_0_20px_rgba(168,85,247,0.5)]">

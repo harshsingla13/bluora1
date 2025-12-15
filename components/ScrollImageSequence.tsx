@@ -13,20 +13,21 @@ interface ScrollImageSequenceProps {
     videoScale: MotionValue<number>;
     className?: string;
     videorotate: MotionValue<number>;
-
+    scrollEndThreshold?: number; // New prop: 0 to 1 (e.g., 0.5 means animation finishes at 50% scroll)
 }
 
 export default function ScrollImageSequence({
-                                                totalFrames,
-                                                folderPath,
-                                                filePrefix,
-                                                fileExtension,
-                                                videoX,
-                                                videoY,
-                                                videorotate,
-                                                videoScale,
-                                                className
-                                            }: ScrollImageSequenceProps) {
+    totalFrames,
+    folderPath,
+    filePrefix,
+    fileExtension,
+    videoX,
+    videoY,
+    videorotate,
+    videoScale,
+    className,
+    scrollEndThreshold = 1 // Default to 1 (normal behavior)
+}: ScrollImageSequenceProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [images, setImages] = useState<HTMLImageElement[]>([]);
     const [currentFrame, setCurrentFrame] = useState(0);
@@ -37,9 +38,9 @@ export default function ScrollImageSequence({
         const preloadImages = async () => {
             const imagePromises = [];
 
-            for (let i = 1; i < totalFrames; i++) {
+            for (let i = 1; i <= totalFrames; i++) {
                 const frameNumber = String(i).padStart(3, '0');
-                const imagePath = `${folderPath}${filePrefix}${frameNumber}.${fileExtension}`;
+                const imagePath = `${folderPath}${filePrefix}${frameNumber}-min.${fileExtension}`;
 
                 const promise = new Promise<HTMLImageElement>((resolve, reject) => {
                     const img = document.createElement('img');
@@ -80,7 +81,12 @@ export default function ScrollImageSequence({
         const render = () => {
             const scrollTop = window.scrollY;
             const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-            const scrollFraction = Math.max(0, Math.min(1, scrollTop / maxScroll));
+
+            // Calculate raw scroll progress (0 to 1)
+            const rawFraction = Math.max(0, Math.min(1, scrollTop / maxScroll));
+
+            // Accelerate based on threshold (e.g., if threshold is 0.5, we reach 1.0 when rawFraction is 0.5)
+            const scrollFraction = Math.min(1, rawFraction / scrollEndThreshold);
 
             const frameIndex = Math.min(
                 Math.floor(scrollFraction * totalFrames),
@@ -133,7 +139,7 @@ export default function ScrollImageSequence({
                 willChange: 'transform',
                 width: '100%',
                 height: '100%',
-                rotateZ:videorotate,
+                rotateZ: videorotate,
                 objectFit: 'contain'
             }}
             className={className}
