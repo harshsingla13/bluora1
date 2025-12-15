@@ -127,7 +127,7 @@ const ContactPage = () => {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6 }}
                         >
-                            <h1 className="text-3xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-teal-400 mb-2 md:mb-3 tracking-tight">
+                            <h1 className="text-3xl md:text-6xl font-black text-white mb-2 md:mb-3 tracking-tight">
                                 Get In Touch
                             </h1>
                             <p className="text-base md:text-xl text-white/70 font-medium">
