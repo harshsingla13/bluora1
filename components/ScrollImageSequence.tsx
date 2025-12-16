@@ -1,12 +1,7 @@
 'use client';
 
 import { useRef, useEffect, useState } from 'react';
-import { motion, MotionValue, useMotionValue, useTransform } from 'framer-motion';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-// Register GSAP plugin
-gsap.registerPlugin(ScrollTrigger);
+import { motion, MotionValue } from 'framer-motion';
 
 interface ScrollImageSequenceProps {
     totalFrames: number;
@@ -19,7 +14,6 @@ interface ScrollImageSequenceProps {
     className?: string;
     videorotate: MotionValue<number>;
     scrollEndThreshold?: number; // New prop: 0 to 1 (e.g., 0.5 means animation finishes at 50% scroll)
-    scrollContainerRef?: React.RefObject<HTMLElement | null>; // Optional ref to scroll container for GSAP
 }
 
 export default function ScrollImageSequence({
@@ -32,17 +26,12 @@ export default function ScrollImageSequence({
     videorotate,
     videoScale,
     className,
-    scrollEndThreshold = 1, // Default to 1 (normal behavior)
-    scrollContainerRef
+    scrollEndThreshold = 1 // Default to 1 (normal behavior)
 }: ScrollImageSequenceProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const wrapperRef = useRef<HTMLDivElement>(null);
     const [images, setImages] = useState<HTMLImageElement[]>([]);
     const [currentFrame, setCurrentFrame] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
-
-    // Local state for GSAP-controlled rotation
-    const [gsapRotation, setGsapRotation] = useState(7);
 
     // Preload all images
     useEffect(() => {
@@ -78,28 +67,6 @@ export default function ScrollImageSequence({
 
         preloadImages();
     }, [totalFrames, folderPath, filePrefix, fileExtension]);
-
-    // GSAP ScrollTrigger for smoother rotation
-    useEffect(() => {
-        if (!wrapperRef.current) return;
-
-        const ctx = gsap.context(() => {
-            // Create a GSAP animation with ScrollTrigger
-            gsap.to(wrapperRef.current, {
-                rotation: 0, // End rotation
-                ease: "none",
-                scrollTrigger: {
-                    trigger: scrollContainerRef?.current || document.body,
-                    start: "top top",
-                    end: "60% top", // Animation completes at 60% scroll
-                    scrub: 3, // Smooth scrubbing - higher = smoother (3 sec lag for ultra-smooth feel)
-                    // markers: true, // Uncomment for debugging
-                }
-            });
-        }, wrapperRef);
-
-        return () => ctx.revert(); // Cleanup
-    }, [isLoading, scrollContainerRef]);
 
     // Handle scroll and render frames
     useEffect(() => {
@@ -163,28 +130,19 @@ export default function ScrollImageSequence({
     }
 
     return (
-        <div
-            ref={wrapperRef}
+        <motion.canvas
+            ref={canvasRef}
             style={{
-                display: 'inline-block',
+                x: videoX,
+                y: videoY,
+                scale: videoScale,
                 willChange: 'transform',
-                transform: 'rotate(7deg)' // Initial rotation - GSAP will animate this
+                width: '100%',
+                height: '100%',
+                rotateZ: videorotate,
+                objectFit: 'contain'
             }}
-        >
-            <motion.canvas
-                ref={canvasRef}
-                style={{
-                    x: videoX,
-                    y: videoY,
-                    scale: videoScale,
-                    willChange: 'transform',
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'contain'
-                }}
-                className={className}
-            />
-        </div>
+            className={className}
+        />
     );
 }
-
