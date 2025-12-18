@@ -4,9 +4,22 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useCart } from '../context/CartContext';
 import { X, Minus, Plus, ShoppingBag, Trash2 } from 'lucide-react';
 import React, { useEffect } from 'react';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 export default function CartDrawer() {
     const { isCartOpen, closeCart, items, removeItem, addItem, decreaseItem, totalItems, totalPrice } = useCart();
+    const { data: session, status } = useSession();
+    const router = useRouter();
+
+    const handleCheckout = () => {
+        closeCart();
+        if (status === 'authenticated') {
+            router.push('/checkout');
+        } else {
+            router.push('/auth/signup');
+        }
+    };
 
     // Prevent body scroll when cart is open
     useEffect(() => {
@@ -141,7 +154,10 @@ export default function CartDrawer() {
                                         <span className="text-cyan-400">₹{totalPrice.toFixed(2)}</span>
                                     </div>
                                 </div>
-                                <button className="w-full py-4 bg-cyan-500 hover:bg-cyan-600 text-black font-bold rounded-xl transition-all hover:scale-[1.02] active:scale-95 shadow-[0_0_20px_rgba(6,182,212,0.4)]">
+                                <button
+                                    onClick={handleCheckout}
+                                    className="w-full py-4 bg-cyan-500 hover:bg-cyan-600 text-black font-bold rounded-xl transition-all hover:scale-[1.02] active:scale-95 shadow-[0_0_20px_rgba(6,182,212,0.4)]"
+                                >
                                     Checkout
                                 </button>
                             </div>

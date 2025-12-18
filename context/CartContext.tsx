@@ -31,6 +31,25 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     const [items, setItems] = useState<CartItem[]>([]);
     const [isCartOpen, setIsCartOpen] = useState(false);
 
+    // Initialize from sessionStorage on mount
+    useEffect(() => {
+        const savedCart = sessionStorage.getItem('bluora-cart');
+        if (savedCart) {
+            try {
+                setItems(JSON.parse(savedCart));
+            } catch (e) {
+                console.error("Failed to parse cart data", e);
+            }
+        }
+    }, []);
+
+    // Save to sessionStorage whenever items change
+    useEffect(() => {
+        if (items.length > 0) {
+            sessionStorage.setItem('bluora-cart', JSON.stringify(items));
+        }
+    }, [items]);
+
     const openCart = () => setIsCartOpen(true);
     const closeCart = () => setIsCartOpen(false);
     const toggleCart = () => setIsCartOpen(prev => !prev);
@@ -69,7 +88,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         });
     };
 
-    const clearCart = () => setItems([]);
+    const clearCart = () => {
+        setItems([]);
+        sessionStorage.removeItem('bluora-cart');
+    };
 
     const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
     const totalPrice = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);

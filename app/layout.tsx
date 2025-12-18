@@ -19,6 +19,7 @@ export const metadata: Metadata = {
 
 import { CartProvider } from "../context/CartContext";
 import CartDrawer from "../components/CartDrawer";
+import AuthProvider from "../components/AuthProvider";
 
 export default function RootLayout({
   children,
@@ -30,10 +31,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <CartProvider>
-          <CartDrawer />
-          {children}
-        </CartProvider>
+        <AuthProvider>
+          <CartProvider>
+            <CartDrawer />
+            {children}
+          </CartProvider>
+        </AuthProvider>
       </body>
     </html>
   );
