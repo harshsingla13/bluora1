@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import Header from '../../components/Header';
@@ -136,7 +137,7 @@ export default function ProductsPage() {
                                     </div>
 
                                     {/* Center Visual */}
-                                    <div className="flex-1 flex items-center justify-center relative">
+                                    <Link href={`/products/${product.id}`} className="flex-1 flex items-center justify-center relative cursor-pointer">
                                         <div className={`w-24 h-36 bg-gradient-to-b ${product.color} opacity-20 rounded-full blur-2xl absolute`} />
 
                                         {/* Big Size Text Behind Image */}
@@ -150,7 +151,7 @@ export default function ProductsPage() {
                                             className={`relative z-10 w-auto object-contain drop-shadow-[0_0_20px_rgba(6,182,212,0.5)] hover:scale-105 transition-transform duration-500 ${product.size === '1L' ? 'h-82' : product.size === '500ml' ? 'h-72' : 'h-56'
                                                 }`}
                                         />
-                                    </div>
+                                    </Link>
 
                                     {/* Bottom Features */}
                                     <div className="space-y-2 pt-4 border-t border-white/5">
@@ -160,19 +161,27 @@ export default function ProductsPage() {
                                         </div>
                                     </div>
 
-                                    <button
-                                        onClick={() => addItem({
-                                            id: product.id,
-                                            title: product.title,
-                                            size: product.size,
-                                            price: product.price,
-                                            image: product.image
-                                        })}
-                                        className="mt-4 w-full py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-white font-bold tracking-wide transition-all duration-300 flex items-center justify-center gap-2 group-hover:bg-cyan-500/20 group-hover:border-cyan-500/40"
-                                    >
-                                        <ShoppingCart size={16} />
-                                        Add to Cart
-                                    </button>
+                                    <div className="mt-4 flex gap-2">
+                                        <Link
+                                            href={`/products/${product.id}`}
+                                            className="flex-1 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-white font-medium tracking-wide transition-all duration-300 flex items-center justify-center text-sm"
+                                        >
+                                            Details
+                                        </Link>
+                                        <button
+                                            onClick={() => addItem({
+                                                id: product.id,
+                                                title: product.title,
+                                                size: product.size,
+                                                price: product.price,
+                                                image: product.image
+                                            })}
+                                            className="flex-[2] py-3 rounded-xl bg-white hover:bg-cyan-50 text-black font-bold tracking-wide transition-all duration-300 flex items-center justify-center gap-2"
+                                        >
+                                            <ShoppingCart size={16} />
+                                            Add
+                                        </button>
+                                    </div>
                                 </SpotlightCard>
                             </motion.div>
                         )
