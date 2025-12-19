@@ -7,13 +7,6 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  // If your repo name is 'bluora', uncomment the line below:
-  // If your repo name is 'bluora', uncomment the line below:
-  // Only use basePath for production (GitHub Pages)
-  // basePath: isProd ? '/bluora1' : '',
-  // env: {
-  //   NEXT_PUBLIC_BASE_PATH: isProd ? '/bluora1' : '',
-  // },
 };
 
 export default nextConfig;
