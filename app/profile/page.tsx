@@ -69,7 +69,7 @@ export default function ProfilePage() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-black text-white relative overflow-hidden pt-24 pb-12">
+        <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-black text-white relative overflow-hidden pt-10 pb-12">
             {/* Background Effects */}
             <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
                 <Particles
