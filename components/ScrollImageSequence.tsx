@@ -8,12 +8,18 @@ interface ScrollImageSequenceProps {
     folderPath: string;
     filePrefix: string;
     fileExtension: string;
+    // Mask props (Optional)
+    maskFolderPath?: string;
+    maskFilePrefix?: string;
+    maskFileExtension?: string;
+    singleMaskPath?: string; // New: Static mask for all frames
+
     videoX: MotionValue<string>;
     videoY: MotionValue<string>;
     videoScale: MotionValue<number>;
     className?: string;
     videorotate: MotionValue<number>;
-    scrollEndThreshold?: number; // New prop: 0 to 1 (e.g., 0.5 means animation finishes at 50% scroll)
+    scrollEndThreshold?: number;
 }
 
 export default function ScrollImageSequence({
@@ -21,52 +27,88 @@ export default function ScrollImageSequence({
     folderPath,
     filePrefix,
     fileExtension,
+    maskFolderPath,
+    maskFilePrefix = "mask-", // Default prefix
+    maskFileExtension = "png", // Default to png (supports alpha)
+    singleMaskPath,
     videoX,
     videoY,
     videorotate,
     videoScale,
     className,
-    scrollEndThreshold = 1 // Default to 1 (normal behavior)
+    scrollEndThreshold = 1
 }: ScrollImageSequenceProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const [images, setImages] = useState<HTMLImageElement[]>([]);
+    const [images, setImages] = useState<{ color: HTMLImageElement; mask: HTMLImageElement | null }[]>([]);
+    const [singleMask, setSingleMask] = useState<HTMLImageElement | null>(null);
     const [currentFrame, setCurrentFrame] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
 
     // Preload all images
     useEffect(() => {
         const preloadImages = async () => {
-            const imagePromises = [];
+
+            // 1. Load Single Mask (if provided)
+            let loadedSingleMask: HTMLImageElement | null = null;
+            if (singleMaskPath) {
+                try {
+                    loadedSingleMask = await new Promise((resolve, reject) => {
+                        const img = document.createElement('img');
+                        img.src = singleMaskPath;
+                        img.onload = () => resolve(img);
+                        img.onerror = reject;
+                    });
+                    setSingleMask(loadedSingleMask);
+                } catch (e) {
+                    console.error("Failed to load single mask:", singleMaskPath);
+                }
+            }
+
+            const promises = [];
 
             for (let i = 1; i <= totalFrames; i++) {
                 const frameNumber = String(i).padStart(3, '0');
-                const imagePath = `${folderPath}${filePrefix}${frameNumber}-min.${fileExtension}`;
 
-                const promise = new Promise<HTMLImageElement>((resolve, reject) => {
+                // Load Color Image
+                const colorPath = `${folderPath}${filePrefix}${frameNumber}.${fileExtension}`;
+                const colorPromise = new Promise<HTMLImageElement>((resolve, reject) => {
                     const img = document.createElement('img');
-                    img.src = imagePath;
+                    img.src = colorPath;
                     img.onload = () => resolve(img);
                     img.onerror = () => {
-                        console.error('Failed to load:', imagePath);
+                        console.error('Failed to load:', colorPath);
                         reject();
                     };
                 });
 
-                imagePromises.push(promise);
+                // Load Sequence Mask (Only if single mask is NOT used and folder is provided)
+                let maskPromise: Promise<HTMLImageElement | null> = Promise.resolve(null);
+                if (!singleMaskPath && maskFolderPath) {
+                    const maskPath = `${maskFolderPath}${maskFilePrefix}${frameNumber}.${maskFileExtension}`;
+                    maskPromise = new Promise<HTMLImageElement | null>((resolve) => {
+                        const img = document.createElement('img');
+                        img.src = maskPath;
+                        img.onload = () => resolve(img);
+                        img.onerror = () => resolve(null);
+                    });
+                }
+
+                promises.push(Promise.all([colorPromise, maskPromise]));
             }
 
             try {
-                const loadedImages = await Promise.all(imagePromises);
-                setImages(loadedImages);
+                const results = await Promise.all(promises);
+                // Map results
+                const frames = results.map(([color, mask]) => ({ color, mask }));
+                setImages(frames);
                 setIsLoading(false);
-                console.log(`✅ Loaded ${totalFrames} frames successfully!`);
             } catch (error) {
                 console.error('Error loading frames:', error);
             }
         };
 
         preloadImages();
-    }, [totalFrames, folderPath, filePrefix, fileExtension]);
+    }, [totalFrames, folderPath, filePrefix, fileExtension, maskFolderPath, maskFilePrefix, maskFileExtension, singleMaskPath]);
 
     // Handle scroll and render frames
     useEffect(() => {
@@ -82,10 +124,7 @@ export default function ScrollImageSequence({
             const scrollTop = window.scrollY;
             const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
 
-            // Calculate raw scroll progress (0 to 1)
             const rawFraction = Math.max(0, Math.min(1, scrollTop / maxScroll));
-
-            // Accelerate based on threshold (e.g., if threshold is 0.5, we reach 1.0 when rawFraction is 0.5)
             const scrollFraction = Math.min(1, rawFraction / scrollEndThreshold);
 
             const frameIndex = Math.min(
@@ -96,16 +135,34 @@ export default function ScrollImageSequence({
             if (frameIndex !== currentFrame) {
                 setCurrentFrame(frameIndex);
 
-                const img = images[frameIndex];
-                if (img && img.complete) {
-                    // FIXED: Set canvas to actual image dimensions
-                    canvas.width = img.naturalWidth;
-                    canvas.height = img.naturalHeight;
+                const frame = images[frameIndex];
 
+                if (frame && frame.color && frame.color.complete) {
+                    const { color } = frame;
+                    // Use single mask if available, otherwise frame mask
+                    const mask = singleMask || frame.mask;
+
+                    // Resize canvas to match image
+                    canvas.width = color.naturalWidth;
+                    canvas.height = color.naturalHeight;
+
+                    // Clear
                     context.clearRect(0, 0, canvas.width, canvas.height);
 
-                    // Draw full image without cropping
-                    context.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
+                    // 1. Draw Color Image (Base)
+                    context.globalCompositeOperation = 'source-over';
+                    context.drawImage(color, 0, 0, color.naturalWidth, color.naturalHeight);
+
+                    // 2. Apply Mask (Cutout)
+                    // 'destination-in': Keeps content where source (mask) is non-transparent. 
+                    // Everything else becomes transparent.
+                    if (mask && mask.complete) {
+                        context.globalCompositeOperation = 'destination-in';
+                        context.drawImage(mask, 0, 0, mask.naturalWidth, mask.naturalHeight);
+                    }
+
+                    // Reset for next frame safety
+                    context.globalCompositeOperation = 'source-over';
                 }
             }
 
@@ -115,11 +172,9 @@ export default function ScrollImageSequence({
         rafId = requestAnimationFrame(render);
 
         return () => {
-            if (rafId) {
-                cancelAnimationFrame(rafId);
-            }
+            if (rafId) cancelAnimationFrame(rafId);
         };
-    }, [isLoading, images, currentFrame, totalFrames]);
+    }, [isLoading, images, currentFrame, totalFrames, scrollEndThreshold, singleMask]);
 
     if (isLoading) {
         return (

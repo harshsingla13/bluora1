@@ -41,7 +41,7 @@ export default function BluoraLandingVideo() {
             <Header opacity={headerOpacity} />
 
             {/* HERO & MISSION SECTION */}
-            <div ref={containerRef} className="relative bg-gradient-to-br from-slate-900 via-blue-950 to-black text-white h-[200vh] overflow-x-hidden selection:bg-cyan-300 selection:text-black">
+            <div ref={containerRef} className="relative bg-linear-to-br from-slate-900 via-blue-950 to-black text-white h-[600vh] overflow-x-hidden selection:bg-cyan-300 selection:text-black">
 
                 {/* Light Rays Effect */}
                 <div className="fixed top-0 left-0 w-full h-screen pointer-events-none z-5 overflow-hidden">
@@ -90,7 +90,7 @@ export default function BluoraLandingVideo() {
                         >
                             {/* Giant BLU - Top Half */}
                             <div className="flex flex-col items-center">
-                                <h1 className="text-[35vw] mt-12 font-black leading-none tracking-wider text-transparent bg-clip-text bg-gradient-to-b from-white/20 to-transparent select-none scale-y-125 transform origin-bottom">
+                                <h1 className="text-[35vw] mt-12 font-black leading-none tracking-wider text-transparent bg-clip-text bg-linear-to-b from-white/20 to-transparent select-none scale-y-125 transform origin-bottom">
                                     BLU
                                 </h1>
                                 {/* Premium Badge floating near BLU */}
@@ -114,27 +114,33 @@ export default function BluoraLandingVideo() {
                         {/* Center: Bottle */}
                         <div className="absolute z-30 flex items-center justify-center">
                             <ScrollImageSequence
-                                totalFrames={40}
-                                folderPath={`${basePath}/bg/`}
+                                totalFrames={154}
+                                folderPath={`${basePath}/bgn/`}
                                 filePrefix="ezgif-frame-"
-                                fileExtension="png"
+                                fileExtension="jpg" // Back to JPG for speed
+                                // Single Static Mask:
+                                singleMaskPath={`${basePath}/mask/ezgif-frame-001.png`}
+
                                 videoX={videoX}
                                 videoY={videoY}
                                 videorotate={videorotate}
                                 videoScale={videoScale}
                                 className="max-w-full max-h-full drop-shadow-[0_0_120px_rgba(6,182,212,0.8)] md:block hidden"
-                                scrollEndThreshold={0.6}
+                                scrollEndThreshold={0.5}
                             />
                             {/* Mobile: Static centered bottle - Crystal Layout Hero Scale */}
                             <ScrollImageSequence
-                                totalFrames={40}
-                                folderPath={`${basePath}/bg/`}
+                                totalFrames={154}
+                                folderPath={`${basePath}/bgn/`}
                                 filePrefix="ezgif-frame-"
-                                fileExtension="png"
+                                fileExtension="jpg" // Back to JPG for speed
+                                // Single Static Mask:
+                                singleMaskPath={`${basePath}/mask/ezgif-frame-001.png`}
+
                                 videoX={useTransform(scrollYProgress, [0, 1], ["0%", "-3%"])}
                                 videoY={useTransform(scrollYProgress, [0, 1], ["3%", "-4%"])}
                                 videorotate={useTransform(scrollYProgress, [0, 1], [7, 0])}
-                                videoScale={useTransform(scrollYProgress, [0, 0.6], [0.7, 0.8])}
+                                videoScale={useTransform(scrollYProgress, [0, 1], [1.3, 0.8])}
                                 className="max-w-full max-h-full drop-shadow-[0_0_120px_rgba(6,182,212,0.8)] brightness-84 md:hidden block opacity-100 z-30"
                                 scrollEndThreshold={0.5}
                             />
@@ -299,7 +305,7 @@ export default function BluoraLandingVideo() {
                             transition={{ delay: 0.3, duration: 0.8 }}
                             className="absolute top-[6%] left-3 w-[280px] z-20 pointer-events-auto"
                         >
-                            <div className="bg-gradient-to-br from-slate-900/90 to-cyan-950/90 backdrop-blur-sm rounded-2xl p-5 border border-cyan-500/30 shadow-[0_0_40px_rgba(0,0,0,0.4)] transform -rotate-2">
+                            <div className="bg-linear-to-br from-slate-900/90 to-cyan-950/90 backdrop-blur-sm rounded-2xl p-5 border border-cyan-500/30 shadow-[0_0_40px_rgba(0,0,0,0.4)] transform -rotate-2">
                                 <div className="flex flex-col gap-3">
                                     <div className="flex items-center gap-3">
                                         <div className="p-3 bg-cyan-500/20 rounded-full shadow-[0_0_20px_rgba(6,182,212,0.5)]">
@@ -321,7 +327,7 @@ export default function BluoraLandingVideo() {
                             transition={{ delay: 0.5, duration: 0.8 }}
                             className="absolute top-[28%] right-3 w-[280px] z-0 pointer-events-auto"
                         >
-                            <div className="bg-gradient-to-br from-slate-900/90 to-blue-950/90 backdrop-blur-sm rounded-2xl p-5 border border-blue-500/30 shadow-[0_0_40px_rgba(0,0,0,0.4)] transform rotate-2">
+                            <div className="bg-linear-to-br from-slate-900/90 to-blue-950/90 backdrop-blur-sm rounded-2xl p-5 border border-blue-500/30 shadow-[0_0_40px_rgba(0,0,0,0.4)] transform rotate-2">
                                 <div className="flex flex-col gap-3">
                                     <div className="flex items-center gap-3">
                                         <div className="p-3 bg-blue-500/20 rounded-full shadow-[0_0_20px_rgba(59,130,246,0.5)]">
@@ -343,7 +349,7 @@ export default function BluoraLandingVideo() {
                             transition={{ delay: 0.7, duration: 0.8 }}
                             className="absolute bottom-[27%] left-3 w-[280px]  pointer-events-auto -rotate-2"
                         >
-                            <div className="bg-gradient-to-br from-slate-900/90 to-purple-950/90 backdrop-blur-sm rounded-2xl p-5 border border-purple-500/30 shadow-[0_0_40px_rgba(0,0,0,0.4)] transform">
+                            <div className="bg-linear-to-br from-slate-900/90 to-purple-950/90 backdrop-blur-sm rounded-2xl p-5 border border-purple-500/30 shadow-[0_0_40px_rgba(0,0,0,0.4)] transform">
                                 <div className="flex flex-col gap-3">
                                     <div className="flex items-center gap-3">
                                         <div className="p-3 bg-purple-500/20 rounded-full shadow-[0_0_20px_rgba(168,85,247,0.5)]">
@@ -380,7 +386,7 @@ export default function BluoraLandingVideo() {
                                 showTooltip={false}
                                 displayOverlayContent={true}
                                 overlayContent={
-                                    <div className="p-8 bg-gradient-to-br from-cyan-500/95 via-cyan-600/95 to-blue-600/95 backdrop-blur-lg h-full flex flex-col justify-center rounded-2xl border border-cyan-400/20">
+                                    <div className="p-8 bg-linear-to-br from-cyan-500/95 via-cyan-600/95 to-blue-600/95 backdrop-blur-lg h-full flex flex-col justify-center rounded-2xl border border-cyan-400/20">
                                         <div className="flex items-center gap-4 mb-3">
                                             <div className="p-3 bg-white/20 rounded-xl backdrop-blur-sm">
                                                 <Target size={28} className="text-white" />
@@ -411,7 +417,7 @@ export default function BluoraLandingVideo() {
                                 showTooltip={false}
                                 displayOverlayContent={true}
                                 overlayContent={
-                                    <div className="p-8 bg-gradient-to-br from-blue-500/95 via-blue-600/95 to-indigo-600/95 backdrop-blur-lg h-full flex flex-col justify-center rounded-2xl border border-blue-400/20">
+                                    <div className="p-8 bg-linear-to-br from-blue-500/95 via-blue-600/95 to-indigo-600/95 backdrop-blur-lg h-full flex flex-col justify-center rounded-2xl border border-blue-400/20">
                                         <div className="flex items-center gap-4 mb-3">
                                             <div className="p-3 bg-white/20 rounded-xl backdrop-blur-sm">
                                                 <Eye size={28} className="text-white" />
@@ -442,7 +448,7 @@ export default function BluoraLandingVideo() {
                                 showTooltip={false}
                                 displayOverlayContent={true}
                                 overlayContent={
-                                    <div className="p-8 bg-gradient-to-br from-purple-500/95 via-purple-600/95 to-pink-600/95 backdrop-blur-lg h-full flex flex-col justify-center rounded-2xl border border-purple-400/20">
+                                    <div className="p-8 bg-linear-to-br from-purple-500/95 via-purple-600/95 to-pink-600/95 backdrop-blur-lg h-full flex flex-col justify-center rounded-2xl border border-purple-400/20">
                                         <div className="flex items-center gap-4 mb-3">
                                             <div className="p-3 bg-white/20 rounded-xl backdrop-blur-sm">
                                                 <Gem size={28} className="text-white" />
@@ -469,7 +475,7 @@ export default function BluoraLandingVideo() {
             </div>
 
             {/* ABOUT SECTION - Magazine Style */}
-            <section className="relative min-h-screen bg-gradient-to-br from-slate-900 via-blue-950 to-black text-white pt-6 overflow-hidden">
+            <section className="relative min-h-screen bg-linear-to-br from-slate-900 via-blue-950 to-black text-white pt-6 overflow-hidden">
 
                 {/* Particles Background */}
                 <div className="absolute inset-0 z-0 opacity-40">
@@ -518,7 +524,7 @@ export default function BluoraLandingVideo() {
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.1 }}
-                            className="bg-gradient-to-br from-cyan-500/10 to-blue-600/10 backdrop-blur-md rounded-3xl p-6 border border-cyan-400/20"
+                            className="bg-linear-to-br from-cyan-500/10 to-blue-600/10 backdrop-blur-md rounded-3xl p-6 border border-cyan-400/20"
                         >
                             <div className="flex flex-col items-center text-center mb-4">
                                 <div className="p-4 bg-cyan-500/20 rounded-2xl mb-3">
@@ -545,7 +551,7 @@ export default function BluoraLandingVideo() {
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.2 }}
-                            className="bg-gradient-to-br from-blue-500/10 to-purple-600/10 backdrop-blur-md rounded-3xl p-6 border border-blue-400/20"
+                            className="bg-linear-to-br from-blue-500/10 to-purple-600/10 backdrop-blur-md rounded-3xl p-6 border border-blue-400/20"
                         >
                             <div className="flex flex-col items-center text-center mb-4">
                                 <div className="p-4 bg-blue-500/20 rounded-2xl mb-3">
@@ -575,10 +581,10 @@ export default function BluoraLandingVideo() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.3 }}
-                            className="bg-gradient-to-br from-purple-600/20 via-cyan-600/20 to-blue-600/20 backdrop-blur-md rounded-3xl p-6 border border-purple-400/30 text-center"
+                            className="bg-linear-to-br from-purple-600/20 via-cyan-600/20 to-blue-600/20 backdrop-blur-md rounded-3xl p-6 border border-purple-400/30 text-center"
                         >
                             <div className="mb-4">
-                                <div className="inline-block p-4 bg-gradient-to-br from-cyan-500/30 to-purple-500/30 rounded-full mb-3">
+                                <div className="inline-block p-4 bg-linear-to-br from-cyan-500/30 to-purple-500/30 rounded-full mb-3">
                                     <Mail size={28} className="text-cyan-300" />
                                 </div>
                                 <h3 className="text-2xl font-black text-white mb-2">Get In Touch</h3>
@@ -629,7 +635,7 @@ export default function BluoraLandingVideo() {
                         <p className="text-lg md:text-xl text-cyan-100/70 max-w-xl mx-auto">
                             Premium Packaged Drinking Water
                         </p>
-                        <div className="mt-4 h-1 w-24 bg-gradient-to-r from-cyan-400 to-blue-500 mx-auto rounded-full"></div>
+                        <div className="mt-4 h-1 w-24 bg-linear-to-r from-cyan-400 to-blue-500 mx-auto rounded-full"></div>
                     </motion.div>
 
                     {/* Info Cards - Compact Glass Style */}
@@ -695,7 +701,7 @@ export default function BluoraLandingVideo() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.4 }}
-                        className="bg-gradient-to-r from-cyan-600/10 mb-4 via-blue-600/10 to-purple-600/10 backdrop-blur-lg rounded-2xl p-6 md:p-8 border border-white/10 text-center"
+                        className="bg-linear-to-r from-cyan-600/10 mb-4 via-blue-600/10 to-purple-600/10 backdrop-blur-lg rounded-2xl p-6 md:p-8 border border-white/10 text-center"
                     >
                         <div className="flex flex-col items-center gap-4">
                             <div className="p-4 bg-cyan-500/20 rounded-full">
